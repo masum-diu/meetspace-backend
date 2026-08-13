@@ -30,6 +30,22 @@ class RoomController extends Controller
         return response()->json($room, 201);
     }
 
+    public function update(Request $request, Room $room): JsonResponse
+    {
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'capacity' => ['required', 'integer', 'min:1'],
+            'floor' => ['required', 'integer'],
+            'color' => ['required', 'string', 'max:50'],
+            'amenities' => ['sometimes', 'array'],
+            'amenities.*' => ['string'],
+        ]);
+
+        $room->update($data);
+
+        return response()->json($room);
+    }
+
     public function destroy(Room $room): JsonResponse
     {
         $room->delete();

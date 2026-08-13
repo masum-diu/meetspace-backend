@@ -9,6 +9,7 @@ Route::get('/admin/verify', [AdminController::class, 'verify'])->middleware('adm
 
 Route::get('/rooms', [RoomController::class, 'index']);
 Route::post('/rooms', [RoomController::class, 'store'])->middleware('admin');
+Route::put('/rooms/{room}', [RoomController::class, 'update'])->middleware('admin');
 Route::delete('/rooms/{room}', [RoomController::class, 'destroy'])->middleware('admin');
 
 Route::get('/bookings/check-conflict', [BookingController::class, 'checkConflict']);
