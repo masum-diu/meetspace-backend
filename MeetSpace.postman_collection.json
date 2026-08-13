@@ -1,0 +1,244 @@
+{
+	"info": {
+		"name": "MeetSpace Room Booking API",
+		"description": "REST API for the MeetSpace meeting room reservation system. Admin-only endpoints require the X-Admin-Password header.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000/api",
+			"type": "string"
+		},
+		{
+			"key": "admin_password",
+			"value": "admin123",
+			"type": "string"
+		},
+		{
+			"key": "room_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "booking_id",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Rooms",
+			"item": [
+				{
+					"name": "Get All Rooms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/rooms",
+							"host": ["{{base_url}}"],
+							"path": ["rooms"]
+						}
+					}
+				},
+				{
+					"name": "Create Room (admin)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const body = pm.response.json();",
+									"    pm.collectionVariables.set('room_id', body.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Admin-Password",
+								"value": "{{admin_password}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Falcon\",\n    \"capacity\": 8,\n    \"floor\": 2,\n    \"color\": \"#ff0000\",\n    \"amenities\": [\"tv\", \"whiteboard\"]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/rooms",
+							"host": ["{{base_url}}"],
+							"path": ["rooms"]
+						}
+					}
+				},
+				{
+					"name": "Delete Room (admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Admin-Password",
+								"value": "{{admin_password}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/rooms/{{room_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["rooms", "{{room_id}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Bookings",
+			"item": [
+				{
+					"name": "Get All Bookings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/bookings",
+							"host": ["{{base_url}}"],
+							"path": ["bookings"]
+						}
+					}
+				},
+				{
+					"name": "Get Bookings by Room",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/bookings?room_id={{room_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["bookings"],
+							"query": [
+								{
+									"key": "room_id",
+									"value": "{{room_id}}"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Bookings by Date",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/bookings?date=2026-08-14",
+							"host": ["{{base_url}}"],
+							"path": ["bookings"],
+							"query": [
+								{
+									"key": "date",
+									"value": "2026-08-14"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Booking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const body = pm.response.json();",
+									"    pm.collectionVariables.set('booking_id', body.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"room_id\": \"{{room_id}}\",\n    \"title\": \"Standup\",\n    \"organizer\": \"Alice\",\n    \"date\": \"2026-08-14\",\n    \"start_time\": \"09:00\",\n    \"end_time\": \"09:30\",\n    \"attendees\": 5\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/bookings",
+							"host": ["{{base_url}}"],
+							"path": ["bookings"]
+						}
+					}
+				},
+				{
+					"name": "Delete Booking (admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "X-Admin-Password",
+								"value": "{{admin_password}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/bookings/{{booking_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["bookings", "{{booking_id}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Utility",
+			"item": [
+				{
+					"name": "Check Conflict",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/bookings/check-conflict?room_id={{room_id}}&date=2026-08-14&start_time=09:15&end_time=09:45",
+							"host": ["{{base_url}}"],
+							"path": ["bookings", "check-conflict"],
+							"query": [
+								{
+									"key": "room_id",
+									"value": "{{room_id}}"
+								},
+								{
+									"key": "date",
+									"value": "2026-08-14"
+								},
+								{
+									"key": "start_time",
+									"value": "09:15"
+								},
+								{
+									"key": "end_time",
+									"value": "09:45"
+								}
+							]
+						}
+					}
+				}
+			]
+		}
+	]
+}
