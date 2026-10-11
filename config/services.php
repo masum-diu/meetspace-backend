@@ -14,6 +14,14 @@ return [
     |
     */
 
+    'clerk' => [
+        'publishable_key' => env('CLERK_PUBLISHABLE_KEY'),
+        // server-side only: never send this to the browser
+        'secret_key' => env('CLERK_SECRET_KEY'),
+        // optional comma-separated origins allowed in the token's "azp" claim
+        'authorized_parties' => env('CLERK_AUTHORIZED_PARTIES'),
+    ],
+
     'postmark' => [
         'key' => env('POSTMARK_API_KEY'),
     ],

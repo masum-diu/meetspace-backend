@@ -15,6 +15,12 @@ class BookingController extends Controller
         $bookings = Booking::query()
             ->when($request->query('room_id'), fn (Builder $query, $roomId) => $query->where('room_id', $roomId))
             ->when($request->query('date'), fn (Builder $query, $date) => $query->where('date', $date))
+            // upcoming view: everything from a day onward (optionally up to another day)
+            ->when($request->query('from'), fn (Builder $query, $from) => $query->where('date', '>=', $from))
+            ->when($request->query('to'), fn (Builder $query, $to) => $query->where('date', '<=', $to))
+            ->orderBy('date')
+            ->orderBy('start_time')
+            ->limit(500)
             ->get();
 
         return response()->json($bookings);
@@ -25,12 +31,16 @@ class BookingController extends Controller
         $data = $request->validate([
             'room_id' => ['required', 'uuid', 'exists:rooms,id'],
             'title' => ['required', 'string', 'max:255'],
-            'organizer' => ['required', 'string', 'max:255'],
             'date' => ['required', 'date_format:Y-m-d'],
             'start_time' => ['required', 'date_format:H:i'],
             'end_time' => ['required', 'date_format:H:i', 'after:start_time'],
             'attendees' => ['required', 'integer', 'min:1'],
         ]);
+
+        // the booking belongs to whoever is signed in
+        $user = $request->user();
+        $data['user_id'] = $user->id;
+        $data['organizer'] = $user->name;
 
         if ($this->hasConflict($data['room_id'], $data['date'], $data['start_time'], $data['end_time'])) {
             return response()->json(['message' => 'This room is already booked for the selected time.'], 409);
@@ -62,14 +72,8 @@ class BookingController extends Controller
         return response()->json(['conflict' => $conflict]);
     }
 
-    private function hasConflict(string $roomId, string $date, string $startTime, string $endTime, ?string $excludeBookingId = null): bool
+    private function hasConflict(string $roomId, string $date, string $startTime, string $endTime): bool
     {
-        return Booking::query()
-            ->where('room_id', $roomId)
-            ->where('date', $date)
-            ->where('start_time', '<', $endTime)
-            ->where('end_time', '>', $startTime)
-            ->when($excludeBookingId, fn (Builder $query, $id) => $query->where('id', '!=', $id))
-            ->exists();
+        return Booking::conflictExists($roomId, $date, $startTime, $endTime);
     }
 }
