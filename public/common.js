@@ -209,6 +209,13 @@ setOnline();
 // PWA install
 let deferredInstall;
 addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredInstall = e; $('#install').hidden = false; });
-$('#install').onclick = () => { $('#install').hidden = true; deferredInstall?.prompt(); deferredInstall = null; };
+const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+const iOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+// iOS Safari has no install prompt: show the button and explain Add to Home Screen
+if (iOS && !standalone) $('#install').hidden = false;
+$('#install').onclick = () => {
+    if (!deferredInstall) { toast('Tap the Share button, then "Add to Home Screen"'); return; }
+    $('#install').hidden = true; deferredInstall.prompt(); deferredInstall = null;
+};
 addEventListener('appinstalled', () => { $('#install').hidden = true; });
 if ('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));

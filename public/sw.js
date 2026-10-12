@@ -1,4 +1,4 @@
-const VERSION = 'meetspace-v27';
+const VERSION = 'meetspace-v28';
 const SHELL = ['/', '/app.css', '/common.js', '/app.js', '/manifest.webmanifest', '/icons/icon-192.png', '/offline.html'];
 
 self.addEventListener('install', (e) => {

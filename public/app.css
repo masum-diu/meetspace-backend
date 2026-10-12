@@ -465,7 +465,6 @@ img,svg,video{max-width:100%}
   .brand img{width:26px;height:26px}
   .actions{gap:.35rem}
   .actions .btn{padding:.45rem .7rem;font-size:.82rem;white-space:nowrap}
-  #install{display:none!important}
   .gbtn-slot.nav{min-width:0}
   h1{font-size:1.35rem}
   /* inputs at 16px stop iOS auto-zoom on focus */
@@ -574,3 +573,5 @@ img,svg,video{max-width:100%}
 .tabs.big .count{margin:0;min-width:1.5rem;height:1.5rem;padding:0 .4rem;display:inline-grid;place-items:center;border-radius:.5rem;background:var(--soft);color:var(--mut);font-size:.75rem;line-height:1}
 .tabs.big button.on .count{background:rgba(255,255,255,.25);color:#fff}
 @media(max-width:380px){.tabs.big button{gap:.3rem;font-size:.82rem;padding:.65rem .3rem}}
+
+#install{background:var(--pri-l);color:var(--pri);border-color:transparent;white-space:nowrap}
