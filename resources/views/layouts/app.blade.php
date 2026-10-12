@@ -22,6 +22,7 @@
         <a class="brand" href="/"><img src="/icons/icon-192.png" alt="" width="28" height="28"><span>MeetSpace</span></a>
         <nav class="mainnav" aria-label="Main">
             <a href="/profile" data-nav="profile" id="navMine" hidden>My bookings</a>
+            <a href="/about" data-nav="about">About</a>
         </nav>
         <div class="actions">
             @yield('actions')
@@ -32,6 +33,13 @@
 </div>
 
 @yield('content')
+
+<nav class="bottomnav" aria-label="Primary">
+    <a href="/" data-nav="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
+    <a href="/book" data-nav="book"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Book</span></a>
+    <a href="/profile" data-nav="profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span>My bookings</span></a>
+    <a href="/about" data-nav="about"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span>About</span></a>
+</nav>
 
 @stack('modals')
 

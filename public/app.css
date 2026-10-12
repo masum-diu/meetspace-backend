@@ -207,7 +207,6 @@ a.fab{display:none;place-items:center;text-decoration:none}
   .actions{margin-left:auto}
 }
 @media(max-width:560px){
-  .brand span{display:none}
   .me span{display:none}.me{padding:.2rem}
   .bk{grid-template-columns:3.2rem 1fr}.bk-side{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;text-align:left}
   .profile{justify-content:center;text-align:center}.pactions{width:100%;justify-content:center}
@@ -430,3 +429,148 @@ aside .agenda{max-width:none}
 .slot.reach small{color:var(--pri)}
 .slot.sel small{opacity:.9}
 #slotHint{margin:0;font-weight:500}
+
+/* ---------- full responsive pass (brand name always visible) ---------- */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{overflow-x:hidden}
+img,svg,video{max-width:100%}
+.brand{flex:none;min-width:0}
+.brand span{white-space:nowrap}
+.bar-in{flex-wrap:nowrap;min-width:0}
+.actions{min-width:0;flex-wrap:nowrap}
+.page-head h1,.pinfo h1,.bi-main h3,.bk-main h3{overflow-wrap:anywhere}
+.bi-main,.bk-main,.pinfo{min-width:0}
+.bi-main p{flex-wrap:wrap}
+.sec-row{flex-wrap:wrap}
+.tabs{max-width:100%;overflow-x:auto;scrollbar-width:none}
+
+@media(max-width:900px){
+  .wrap,.bar-in{padding-left:1rem;padding-right:1rem}
+  .page-head{padding:1.2rem 0 .8rem}
+  h1{font-size:1.5rem}
+  .stats{gap:.7rem}
+  .stat span{font-size:1.35rem}
+}
+@media(max-width:700px){
+  .pactions{flex-wrap:wrap}
+  .pactions .btn{flex:1 1 auto}
+  .sheet{max-width:none}
+  .roompick{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  body{font-size:14.5px;padding-bottom:5.5rem}
+  .wrap,.bar-in{padding-left:.85rem;padding-right:.85rem}
+  .bar-in{gap:.5rem;padding-top:calc(.55rem + env(safe-area-inset-top));padding-bottom:.55rem}
+  .brand{font-size:1rem;gap:.45rem}
+  .brand img{width:26px;height:26px}
+  .actions{gap:.35rem}
+  .actions .btn{padding:.45rem .7rem;font-size:.82rem;white-space:nowrap}
+  #install{display:none!important}
+  .gbtn-slot.nav{min-width:0}
+  h1{font-size:1.35rem}
+  /* inputs at 16px stop iOS auto-zoom on focus */
+  input,select,textarea{font-size:16px}
+  .btn,.tabs button,.chip,.book,.tl-actions button{min-height:2.5rem}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat{padding:.8rem .9rem}
+  .card{padding:1rem}
+  .row{grid-template-columns:1fr}
+  .tabs.big button{padding:.6rem .5rem;font-size:.88rem}
+  .bi{grid-template-columns:1fr;gap:.5rem;padding:.9rem}
+  .bi-time{display:flex;align-items:baseline;gap:.6rem}
+  .bi-side{grid-column:1}
+  .skel-bi{grid-template-columns:1fr}
+  .bk{grid-template-columns:3rem 1fr;padding:.85rem;gap:.7rem}
+  .gate{margin:1.5rem auto}
+  .signin-btn{min-width:0;width:100%}
+  .dp{flex-basis:3.4rem}
+  .slotgrid{gap:.35rem}
+  .sumbar{bottom:calc(.5rem + env(safe-area-inset-bottom));padding:.7rem .8rem}
+  .stepper{width:100%;max-width:12rem}
+  .sheet{padding:1.1rem;padding-bottom:calc(1.1rem + env(safe-area-inset-bottom));max-height:90vh}
+  #toast{max-width:calc(100vw - 2rem)}
+  .fab{right:1rem}
+}
+@media(max-width:380px){
+  .brand span{font-size:.95rem}
+  .actions .btn{padding:.4rem .55rem;font-size:.78rem}
+  .stats{grid-template-columns:1fr}.stat:last-child{grid-column:auto}
+  .steps{gap:.3rem}
+  .slotgrid{grid-template-columns:repeat(2,1fr)}
+  .roomlist li{gap:.5rem}
+}
+@media(min-width:1400px){:root{--page:1200px}}
+@media(hover:none){
+  .room:hover{transform:none;box-shadow:var(--shadow)}
+}
+
+/* ---------- mobile booking card polish ---------- */
+@media(max-width:560px){
+  .bi{grid-template-columns:1fr auto;grid-template-areas:"time side" "main main";align-items:center;row-gap:.6rem}
+  .bi-time{grid-area:time;align-items:center}
+  .bi-time small::before{content:"→";margin-right:.45rem;color:var(--mut)}
+  .bi-side{grid-area:side;grid-column:auto;align-self:center}
+  .bi-main{grid-area:main}
+  .bi-main h3{font-size:1.1rem}
+  .bi-main p.meta{font-size:.84rem;color:var(--mut)}
+  .bi-main p.meta b{color:var(--ink)}
+  .blist .acts{gap:.5rem;margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--line)}
+  .blist .acts .x{flex:1;display:grid;place-items:center;min-height:2.4rem;border-radius:.6rem;background:var(--soft);font-size:.85rem;color:var(--ink)}
+  .blist .acts a.x{background:var(--pri-l);color:var(--pri)}
+  .blist .acts .x.mydel,.blist .acts .x.admdel{background:var(--bad-l);color:var(--bad)}
+  .blist .acts .x:hover{text-decoration:none}
+  .page-head{padding-bottom:.6rem}
+  .fab{box-shadow:0 6px 16px rgba(79,70,229,.35)}
+}
+
+/* ---------- tabs use the brand colour ---------- */
+.tabs.big{background:var(--pri-l)}
+.tabs.big button{color:var(--pri);transition:background .15s,color .15s}
+.tabs.big button.on,.tabs button.on{background:var(--pri);color:#fff;box-shadow:0 2px 6px rgba(79,70,229,.35)}
+.tabs.big .count{background:var(--card);color:var(--pri)}
+.tabs.big button.on .count{background:rgba(255,255,255,.22);color:#fff}
+.tabs:not(.big){background:var(--pri-l)}
+.tabs:not(.big) button{color:var(--pri)}
+
+/* ---------- mobile bottom navigation ---------- */
+.bottomnav{display:none}
+@media(max-width:900px){
+  .bottomnav{display:grid;grid-template-columns:repeat(3,1fr);position:fixed;left:0;right:0;bottom:0;z-index:8;background:var(--card);border-top:1px solid var(--line);padding:.35rem .5rem calc(.35rem + env(safe-area-inset-bottom));box-shadow:0 -4px 16px rgba(16,24,40,.08)}
+  .bottomnav a{display:grid;justify-items:center;gap:.1rem;padding:.35rem 0;border-radius:.7rem;text-decoration:none;color:var(--mut);font-size:.7rem;font-weight:600}
+  .bottomnav svg{width:1.4rem;height:1.4rem;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .bottomnav a:active{background:var(--soft)}
+  body[data-page=home] .bottomnav [data-nav=home],
+  body[data-page=book] .bottomnav [data-nav=book],
+  body[data-page=profile] .bottomnav [data-nav=profile]{color:var(--pri);background:var(--pri-l)}
+  .is-admin .bottomnav{display:none}
+  body{padding-bottom:calc(5.5rem + env(safe-area-inset-bottom))}
+  /* the bottom bar replaces the floating + button */
+  .fab,a.fab{display:none!important}
+  .sumbar{bottom:calc(4.6rem + env(safe-area-inset-bottom))}
+  #toast{bottom:calc(6rem + env(safe-area-inset-bottom))}
+}
+
+/* ---------- about page ---------- */
+.about{display:grid;justify-items:center;text-align:center;gap:.6rem;padding:2rem 1.25rem}
+.about-logo{border-radius:18px;box-shadow:var(--shadow)}
+.about h2{margin:.3rem 0 0;font-size:1.4rem}
+.about .note{max-width:32rem}
+.about-list{list-style:none;margin:.8rem 0 0;padding:0;width:100%;max-width:26rem;border:1px solid var(--line);border-radius:.9rem;overflow:hidden}
+.about-list li{display:flex;justify-content:space-between;gap:1rem;padding:.8rem 1rem;text-align:left}
+.about-list li+li{border-top:1px solid var(--line)}
+.about-list span{color:var(--mut)}
+.about-foot{margin-top:.8rem;font-size:.8rem}
+@media(max-width:900px){
+  .bottomnav{grid-template-columns:repeat(4,1fr)}
+  body[data-page=about] .bottomnav [data-nav=about]{color:var(--pri);background:var(--pri-l)}
+}
+@media(max-width:380px){.bottomnav a span{font-size:.64rem}}
+
+/* ---------- segmented tabs: aligned, one-line, gradient active pill ---------- */
+.tabs.big{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:.3rem;padding:.3rem;border-radius:1rem;background:var(--card);border:1px solid var(--line);box-shadow:inset 0 1px 3px rgba(16,24,40,.08);overflow:visible}
+.tabs.big button{display:flex;align-items:center;justify-content:center;gap:.5rem;white-space:nowrap;min-width:0;padding:.7rem .5rem;border-radius:.75rem;font-weight:650;color:var(--mut);background:transparent;box-shadow:none;position:relative}
+.tabs.big button:hover:not(.on){background:var(--pri-l);color:var(--pri)}
+.tabs.big button.on{background:linear-gradient(135deg,var(--pri),#7c3aed);color:#fff;box-shadow:0 6px 14px rgba(79,70,229,.35)}
+.tabs.big .count{margin:0;min-width:1.5rem;height:1.5rem;padding:0 .4rem;display:inline-grid;place-items:center;border-radius:.5rem;background:var(--soft);color:var(--mut);font-size:.75rem;line-height:1}
+.tabs.big button.on .count{background:rgba(255,255,255,.25);color:#fff}
+@media(max-width:380px){.tabs.big button{gap:.3rem;font-size:.82rem;padding:.65rem .3rem}}

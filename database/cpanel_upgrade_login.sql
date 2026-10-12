@@ -1,7 +1,7 @@
 -- Run this ONCE on an existing MeetSpace database (cPanel / phpMyAdmin) to add Clerk sign-in.
 -- Fresh installs: import cpanel_schema.sql instead, it already includes everything below.
 
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `users_clerk_id_unique` (`clerk_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `api_tokens` (
+CREATE TABLE IF NOT EXISTS `api_tokens` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT UNSIGNED NOT NULL,
   `token_hash` CHAR(64) NOT NULL,
